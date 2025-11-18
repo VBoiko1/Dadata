@@ -10,7 +10,6 @@ import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -23,6 +22,7 @@ public class AddressDataTest extends DadataEndpoints {
         // Сбрасываем спецификации RestAssured перед каждым тестом
         RestAssured.reset();
     }
+
     /**
      * Проверяет получение элементов справочника адресов по наименованию города
      */
