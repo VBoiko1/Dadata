@@ -8,28 +8,45 @@ import java.util.Properties;
 
 public class ConfigContainer {
 
+    // Статическое поле для хранения единственного экземпляра
+    private static ConfigContainer instance;
 
-    private static final Properties properties = new Properties();
+    //  Поле для хранения свойств
+    private final Properties properties;
 
-    static {
+    //  Приватный конструктор - нельзя создать извне
+    private ConfigContainer() {
+        this.properties = new Properties();
         loadProperties();
     }
 
-    private static void loadProperties() {
-        try (InputStream input = ConfigContainer.class.getClassLoader().getResourceAsStream("dadata.properties")) {
+    //  Публичный статический метод для получения экземпляра
+    public static synchronized ConfigContainer getInstance() {
+        if (instance == null) {
+            instance = new ConfigContainer();
+        }
+        return instance;
+    }
+
+    //  Метод загрузки значений
+    private void loadProperties() {
+        try (InputStream input = getClass().getClassLoader()
+                .getResourceAsStream("dadata.properties")) {
 
             if (input == null) {
-                throw new RuntimeException("Файл не найден");
+                throw new RuntimeException("Файл 'dadata.properties' не найден в classpath");
             }
+
+            // UTF-8
             properties.load(new InputStreamReader(input, StandardCharsets.UTF_8));
 
         } catch (IOException e) {
-            throw new RuntimeException("Error loading config", e);
+            throw new RuntimeException("Ошибка при загрузке конфигурации", e);
         }
     }
 
-
-    public static String getConfigProperty(String key) {
-        return ConfigContainer.properties.getProperty(key);
+    //  Метод для получения значений
+    public String getProperty(String key) {
+        return properties.getProperty(key);
     }
 }

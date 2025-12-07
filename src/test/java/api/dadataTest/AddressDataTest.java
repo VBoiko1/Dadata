@@ -4,14 +4,11 @@ import api.Specification;
 import api.dadata.address.AddressIplocate;
 import api.dadata.address.AddressRequest;
 import api.dadata.address.AddressSuggestions;
-import api.dadata.helpers.ConfigContainer;
 import api.endpoints.DadataEndpoints;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +27,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressValid() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
-        AddressRequest addressRequest = new AddressRequest(ConfigContainer.getConfigProperty("POSTAddressValidValue"));
+        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue"));
 
         List<AddressSuggestions> addressSuggestions = given()
                 .when()
@@ -52,7 +49,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSSuggestAddressValid1() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
-        AddressRequest addressRequest = new AddressRequest(ConfigContainer.getConfigProperty("POSTAddressValidValue1"));
+        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue1"));
 
         List<AddressSuggestions> addressSuggestions = given()
                 .when()
@@ -73,7 +70,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressLowerCseValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
-        AddressRequest addressRequest = new AddressRequest(ConfigContainer.getConfigProperty("POSTAddressValidValue2"));
+        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue2"));
 
         List<AddressSuggestions> addressSuggestions = given()
                 .when()
@@ -93,7 +90,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressUpperCaseValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
-        AddressRequest addressRequest = new AddressRequest(ConfigContainer.getConfigProperty("POSTAddressValidValue3"));
+        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue3"));
 
         List<AddressSuggestions> addressSuggestions = given()
                 .when()
@@ -113,8 +110,8 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressENLanguageValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
-        AddressRequest addressRequest = new AddressRequest(ConfigContainer.getConfigProperty("POSTAddressValidValueEN"),
-                ConfigContainer.getConfigProperty("POSTSuggestAddressLanguage")
+        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValueEN"),
+                config.getProperty("POSTSuggestAddressLanguage")
         );
 
         List<AddressSuggestions> addressSuggestions = given()
@@ -155,7 +152,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressCountResult() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
-        AddressRequest addressRequest = new AddressRequest(ConfigContainer.getConfigProperty("POSTAddressValidValue4"));
+        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"));
 
         List<AddressSuggestions> addressSuggestions = given()
                 .when()
@@ -174,7 +171,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressCountValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
-        AddressRequest addressRequest = new AddressRequest(ConfigContainer.getConfigProperty("POSTAddressValidValue4"), 22);
+        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"), 22);
 
         List<AddressSuggestions> addressSuggestions = given()
                 .when()
@@ -209,7 +206,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressInvalidTokenAuth() {
         Specification.installSpecification(Specification.requestSpecInvalidToken(URL), Specification.responseSpecError403());
 
-        AddressRequest addressRequest = new AddressRequest(ConfigContainer.getConfigProperty("POSTAddressInvalidToken"));
+        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressInvalidToken"));
 
         given()
                 .when()
@@ -226,7 +223,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressWithoutToken() {
         Specification.installSpecification(Specification.requestSpecWithoutToken(URL), Specification.responseSpecError401());
 
-        AddressRequest addressRequest = new AddressRequest(ConfigContainer.getConfigProperty("POSTAddressWithoutToken"));
+        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressWithoutToken"));
 
         given()
                 .when()
