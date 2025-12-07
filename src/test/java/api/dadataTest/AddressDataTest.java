@@ -14,7 +14,6 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
-
 public class AddressDataTest extends DadataEndpoints {
 
     @BeforeEach
@@ -38,8 +37,8 @@ public class AddressDataTest extends DadataEndpoints {
                 .then().log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
-        assertEquals("г Москва", addressSuggestions.get(0).getValue());
-        assertEquals("г Москва", addressSuggestions.get(0).getData().getRegion_with_type());
+        assertEquals(config.getProperty("POSTAddressValidValueExpected"), addressSuggestions.get(0).getValue());
+        assertEquals(config.getProperty("POSTAddressValidValueRegionTypeExpected"), addressSuggestions.get(0).getData().getRegion_with_type());
 
     }
 
@@ -58,8 +57,8 @@ public class AddressDataTest extends DadataEndpoints {
                 .then().log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
-        assertEquals("г Краснодар", addressSuggestions.get(1).getValue());
-        assertEquals("Россия", addressSuggestions.get(1).getData().getCountry());
+        assertEquals(config.getProperty("POSTAddressValidValue1Expected"), addressSuggestions.get(1).getValue());
+        assertEquals(config.getProperty("POSTAddressValidValueCountryExpected"), addressSuggestions.get(1).getData().getCountry());
     }
 
 
@@ -77,8 +76,8 @@ public class AddressDataTest extends DadataEndpoints {
                 .then().log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
-        assertEquals("г Владимир", addressSuggestions.get(1).getValue());
-        assertEquals("г Владимир", addressSuggestions.get(1).getData().getCity_with_type());
+        assertEquals(config.getProperty("POSTAddressValidValue2Expected"), addressSuggestions.get(1).getValue());
+        assertEquals(config.getProperty("POSTAddressValidValue2CityTypeExpected"), addressSuggestions.get(1).getData().getCity_with_type());
     }
 
 
@@ -96,8 +95,8 @@ public class AddressDataTest extends DadataEndpoints {
                 .then().log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
-        assertEquals("г Москва", addressSuggestions.get(0).getValue());
-        assertTrue(addressSuggestions.get(0).getUnrestricted_value().contains("г Москва"));
+        assertEquals(config.getProperty("POSTAddressValidValue3Expected"), addressSuggestions.get(0).getValue());
+        assertTrue(addressSuggestions.get(0).getUnrestricted_value().contains(config.getProperty("POSTAddressValue3UnrestrictedExpected")));
     }
 
 
@@ -117,8 +116,8 @@ public class AddressDataTest extends DadataEndpoints {
                 .then().log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
-        assertTrue(addressSuggestions.get(0).getValue().contains(("Moscow")));
-        assertEquals("Moscow", addressSuggestions.get(0).getData().getCity());
+        assertTrue(addressSuggestions.get(0).getValue().contains((config.getProperty("POSTAddressValidValueEnExpected"))));
+        assertEquals(config.getProperty("POSTAddressValidValueEnCityExpected"), addressSuggestions.get(0).getData().getCity());
 
     }
 
@@ -233,14 +232,14 @@ public class AddressDataTest extends DadataEndpoints {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
         AddressIplocate addressIplocates = given()
-                .param("ip", "46.226.227.20")
+                .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp"))
                 .when()
                 .get(GET_IPLOCATE_ADDRESS)
                 .then().log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
 
-        assertEquals("г Москва", addressIplocates.getValue());
-        assertEquals("Москва", addressIplocates.getData().getCity());
+        assertEquals(config.getProperty("GETIplocateAddressValueIpExpected"), addressIplocates.getValue());
+        assertEquals(config.getProperty("GETIplocateAddressValueCityExpected"), addressIplocates.getData().getCity());
     }
 
 
@@ -250,7 +249,7 @@ public class AddressDataTest extends DadataEndpoints {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
         AddressIplocate addressIplocate = given()
-                .param("ip", "456723442")
+                .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressInvalidIp"))
                 .when()
                 .get(GET_IPLOCATE_ADDRESS)
                 .then().log().all()
@@ -281,15 +280,15 @@ public class AddressDataTest extends DadataEndpoints {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
         AddressIplocate addressIplocate = given()
-                .param("ip", "5.255.231.44")
-                .param("language", "en")
+                .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp1"))
+                .param(GET_IPLOCATE_ADDRESS_PARAM_LNG, config.getProperty("GETIplocateAddressParamEN"))
                 .when()
                 .get(GET_IPLOCATE_ADDRESS)
                 .then().log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
 
-        assertTrue(addressIplocate.getValue().contains("Moscow"));
-        assertEquals("Moscow", addressIplocate.getData().getCity());
+        assertTrue(addressIplocate.getValue().contains(config.getProperty("GETIplocateAddressValueIp1Expected")));
+        assertEquals(config.getProperty("GETIplocateAddressValue1CityExpected"), addressIplocate.getData().getCity());
     }
 
 
@@ -299,7 +298,7 @@ public class AddressDataTest extends DadataEndpoints {
         Specification.installSpecification(Specification.requestSpecInvalidToken(URL), Specification.responseSpecError403());
 
         given()
-                .param("ip", "5.255.231.44")
+                .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp2"))
                 .when()
                 .get(GET_IPLOCATE_ADDRESS)
                 .then().log().all()
@@ -313,7 +312,7 @@ public class AddressDataTest extends DadataEndpoints {
         Specification.installSpecification(Specification.requestSpecWithoutToken(URL), Specification.responseSpecError401());
 
         given()
-                .param("ip", "46.226.227.20")
+                .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp3"))
                 .when()
                 .get(GET_IPLOCATE_ADDRESS)
                 .then().log().all()
