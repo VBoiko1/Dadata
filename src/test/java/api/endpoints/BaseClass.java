@@ -20,9 +20,9 @@ public class BaseClass {
 
     protected ConfigContainer config;
 
-    public BaseClass(){
+    public BaseClass() {
 
-    this.config =  ConfigContainer.getInstance();
+        this.config = ConfigContainer.getInstance();
 
     }
 
@@ -34,7 +34,6 @@ public class BaseClass {
     public static String getInvalidToken() {
         return INVALID_TOKEN;
     }
-
 
 
 }

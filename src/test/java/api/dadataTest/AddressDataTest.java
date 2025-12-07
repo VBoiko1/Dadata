@@ -12,9 +12,8 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
+
 public class AddressDataTest extends DadataEndpoints {
-
-
 
 
     @Test
