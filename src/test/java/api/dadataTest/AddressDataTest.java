@@ -5,8 +5,6 @@ import api.dadata.address.AddressIplocate;
 import api.dadata.address.AddressRequest;
 import api.dadata.address.AddressSuggestions;
 import api.endpoints.DadataEndpoints;
-import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +14,7 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 public class AddressDataTest extends DadataEndpoints {
 
-    @BeforeEach
-    public void setUp() {
-        // Сбрасываем спецификации RestAssured перед каждым тестом
-        RestAssured.reset();
-    }
+
 
 
     @Test

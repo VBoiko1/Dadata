@@ -1,8 +1,16 @@
 package api.endpoints;
 
 import api.dadata.helpers.ConfigContainer;
+import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeEach;
 
 public class BaseClass {
+
+    @BeforeEach
+    public void setUp() {
+        // Сбрасываем спецификации RestAssured перед каждым тестом
+        RestAssured.reset();
+    }
 
     protected static final String URL = "https://suggestions.dadata.ru/suggestions/";
 
