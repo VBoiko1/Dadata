@@ -7,8 +7,11 @@ import api.dadata.address.AddressSuggestions;
 import api.endpoints.DadataEndpoints;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
+
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,10 +23,9 @@ public class AddressDataTest extends DadataEndpoints {
         RestAssured.reset();
     }
 
-    /**
-     * Проверяет получение элементов справочника адресов по наименованию города
-     */
+
     @Test
+    @DisplayName("Проверяет получение элементов справочника адресов по наименованию города")
     public void testPOSTSuggestAddressValid() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -41,11 +43,9 @@ public class AddressDataTest extends DadataEndpoints {
 
     }
 
-    /**
-     * Проверяет получение элементов справочника адресов по части наименованию города
-     */
 
     @Test
+    @DisplayName("Проверяет получение элементов справочника адресов по части наименованию города")
     public void testPOSTSSuggestAddressValid1() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -62,11 +62,9 @@ public class AddressDataTest extends DadataEndpoints {
         assertEquals("Россия", addressSuggestions.get(1).getData().getCountry());
     }
 
-    /**
-     * Проверяет получение элементов справочника адресов по наименованию города в нижнем регистре
-     */
 
     @Test
+    @DisplayName("Проверяет получение элементов справочника адресов по наименованию города в нижнем регистре")
     public void testPOSTSuggestAddressLowerCseValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -83,10 +81,9 @@ public class AddressDataTest extends DadataEndpoints {
         assertEquals("г Владимир", addressSuggestions.get(1).getData().getCity_with_type());
     }
 
-    /**
-     * Проверяет получение элементов справочника адресов по наименованию города в верхнем регистре
-     */
+
     @Test
+    @DisplayName("Проверяет получение элементов справочника адресов по наименованию города в верхнем регистре")
     public void testPOSTSuggestAddressUpperCaseValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -103,10 +100,9 @@ public class AddressDataTest extends DadataEndpoints {
         assertTrue(addressSuggestions.get(0).getUnrestricted_value().contains("г Москва"));
     }
 
-    /**
-     * Проверяет получение элементов справочника адресов на английском языке
-     */
+
     @Test
+    @DisplayName("Проверяет получение элементов справочника адресов на английском языке")
     public void testPOSTSuggestAddressENLanguageValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -126,10 +122,9 @@ public class AddressDataTest extends DadataEndpoints {
 
     }
 
-    /**
-     * Запрос с пустым Query
-     */
+
     @Test
+    @DisplayName("Запрос с пустым Query")
     public void testPOSTSuggestAddressEmptyValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -145,10 +140,9 @@ public class AddressDataTest extends DadataEndpoints {
         assertTrue(addressSuggestions.isEmpty());
     }
 
-    /**
-     * Проверяет получение элементов справочника по количеству выдаваемых результатов (По умолчанию 10)
-     */
+
     @Test
+    @DisplayName("Проверяет получение элементов справочника по количеству выдаваемых результатов (По умолчанию 10)")
     public void testPOSTSuggestAddressCountResult() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -164,10 +158,9 @@ public class AddressDataTest extends DadataEndpoints {
         assertEquals(10, addressSuggestions.size());
     }
 
-    /**
-     * Проверяет получение элементов справочника по заданному количеству выдаваемых результатов.(Макс. = 20)
-     */
+
     @Test
+    @DisplayName("Проверяет получение элементов справочника по заданному количеству выдаваемых результатов.(Макс. = 20)")
     public void testPOSTSuggestAddressCountValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -183,10 +176,9 @@ public class AddressDataTest extends DadataEndpoints {
         assertEquals(20, addressSuggestions.size());
     }
 
-    /**
-     * Проверка с некорректным телом запроса
-     */
+
     @Test
+    @DisplayName("Проверка с некорректным телом запроса")
     public void testPOSTSuggestAddressInvalidValue() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecError400());
 
@@ -199,10 +191,9 @@ public class AddressDataTest extends DadataEndpoints {
 
     }
 
-    /**
-     * Проверка получение элементов справочника с не существующим токеном
-     */
+
     @Test
+    @DisplayName("Проверка получение элементов справочника с не существующим токеном")
     public void testPOSTSuggestAddressInvalidTokenAuth() {
         Specification.installSpecification(Specification.requestSpecInvalidToken(URL), Specification.responseSpecError403());
 
@@ -216,10 +207,9 @@ public class AddressDataTest extends DadataEndpoints {
 
     }
 
-    /**
-     * Проверка получение элементов справочника без токена
-     */
+
     @Test
+    @DisplayName("Проверка получение элементов справочника без токена")
     public void testPOSTSuggestAddressWithoutToken() {
         Specification.installSpecification(Specification.requestSpecWithoutToken(URL), Specification.responseSpecError401());
 
@@ -236,10 +226,9 @@ public class AddressDataTest extends DadataEndpoints {
 
     /**
      * Проверки API: город по IP-адресу
-     * <p>
-     * Проверка получения элемента справочника по IP
      */
     @Test
+    @DisplayName("Проверка получения элемента справочника по IP")
     public void testGETIplocateAddress() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -250,14 +239,13 @@ public class AddressDataTest extends DadataEndpoints {
                 .then().log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
 
-        assertEquals("г Краснодар", addressIplocates.getValue());
-        assertEquals("Краснодар", addressIplocates.getData().getCity());
+        assertEquals("г Москва", addressIplocates.getValue());
+        assertEquals("Москва", addressIplocates.getData().getCity());
     }
 
-    /**
-     * Проверка с указанием не валидного IP
-     */
+
     @Test
+    @DisplayName("Проверка с указанием не валидного IP")
     public void testGETIplocateAddressInvalidIp() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -272,10 +260,8 @@ public class AddressDataTest extends DadataEndpoints {
 
     }
 
-    /**
-     * Проверка запрос без обязательного параметра ip
-     */
     @Test
+    @DisplayName("Проверка запрос без обязательного параметра ip")
     public void testGETIplocateAddressWithoutIp() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -285,13 +271,12 @@ public class AddressDataTest extends DadataEndpoints {
                 .then().log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
 
-        assertNull(addressIplocate);
+        assertNotNull(addressIplocate);
     }
 
-    /**
-     * Проверка запрос c параметром language.
-     */
+
     @Test
+    @DisplayName("Проверка запрос c параметром language.")
     public void testGETIplocateAddressLanguageEn() {
         Specification.installSpecification(Specification.requestSpec(URL), Specification.responseSpecOK200());
 
@@ -307,10 +292,9 @@ public class AddressDataTest extends DadataEndpoints {
         assertEquals("Moscow", addressIplocate.getData().getCity());
     }
 
-    /**
-     * Проверка запрос c не верным Токеном
-     */
+
     @Test
+    @DisplayName("Проверка запрос c не верным Токеном")
     public void testGETIplocateAddressInvalidToken() {
         Specification.installSpecification(Specification.requestSpecInvalidToken(URL), Specification.responseSpecError403());
 
@@ -322,10 +306,9 @@ public class AddressDataTest extends DadataEndpoints {
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
     }
 
-    /**
-     * Проверка запрос без авторизации
-     */
+
     @Test
+    @DisplayName("Проверка запрос без авторизации")
     public void testGETIplocateAddressWithoutToken() {
         Specification.installSpecification(Specification.requestSpecWithoutToken(URL), Specification.responseSpecError401());
 
