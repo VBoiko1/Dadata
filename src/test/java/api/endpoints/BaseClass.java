@@ -1,8 +1,7 @@
 package api.endpoints;
 
 import api.dadata.helpers.ConfigContainer;
-import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeEach;
+
 
 public class BaseClass {
 
@@ -18,7 +17,6 @@ public class BaseClass {
 
     }
 
-
     public static String getToken() {
         String token = System.getenv("DADATA_TOKEN");
 
@@ -28,7 +26,6 @@ public class BaseClass {
 
         return "Token " + token.trim();
     }
-
 
     public static String getInvalidToken() {
         return INVALID_TOKEN;

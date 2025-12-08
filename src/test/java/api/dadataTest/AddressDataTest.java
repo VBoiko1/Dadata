@@ -7,12 +7,15 @@ import api.dadata.address.AddressSuggestions;
 import api.endpoints.DadataEndpoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Execution(ExecutionMode.CONCURRENT)
 public class AddressDataTest extends DadataEndpoints {
 
 
