@@ -6,11 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class BaseClass {
 
-    @BeforeEach
+  /*  @BeforeEach
     public void setUp() {
         // Сбрасываем спецификации RestAssured перед каждым тестом
         RestAssured.reset();
-    }
+    }*/
 
     protected static final String URL = "https://suggestions.dadata.ru/suggestions/";
 
