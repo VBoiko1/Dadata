@@ -1,7 +1,6 @@
 package api;
 
 import api.endpoints.BaseClass;
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -51,10 +50,6 @@ public class Specification {
                 .build();
     }
 
-    public static void installSpecification(RequestSpecification request, ResponseSpecification response) {
-        RestAssured.requestSpecification = request;
-        RestAssured.responseSpecification = response;
-    }
 
     public static ResponseSpecification responseSpecError403() {
         return new ResponseSpecBuilder()
@@ -62,12 +57,7 @@ public class Specification {
                 .build();
     }
 
-    public static void installSpecification(RequestSpecification request) {
-        RestAssured.requestSpecification = request;
+
     }
 
-    public static void installSpecification(ResponseSpecification response) {
-        RestAssured.responseSpecification = response;
-    }
 
-}
