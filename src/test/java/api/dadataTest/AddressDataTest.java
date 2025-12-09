@@ -1,11 +1,11 @@
 package api.dadataTest;
 
-import api.Specification;
 import api.dadata.address.AddressIplocate;
 import api.dadata.address.AddressRequest;
 import api.dadata.address.AddressSuggestions;
 import api.endpoints.DadataEndpoints;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
@@ -29,6 +29,7 @@ public class AddressDataTest extends DadataEndpoints {
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -52,6 +53,7 @@ public class AddressDataTest extends DadataEndpoints {
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -74,6 +76,7 @@ public class AddressDataTest extends DadataEndpoints {
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -96,6 +99,7 @@ public class AddressDataTest extends DadataEndpoints {
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -120,6 +124,7 @@ public class AddressDataTest extends DadataEndpoints {
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -143,6 +148,7 @@ public class AddressDataTest extends DadataEndpoints {
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -164,6 +170,7 @@ public class AddressDataTest extends DadataEndpoints {
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -185,6 +192,7 @@ public class AddressDataTest extends DadataEndpoints {
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -204,6 +212,7 @@ public class AddressDataTest extends DadataEndpoints {
 
         given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body("{addressRequest}")
                 .post(requestPath)
@@ -223,7 +232,8 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressInvalidToken"));
 
         given()
-                .header("Authorization",getToken())
+                .header("Authorization",getInvalidToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -242,7 +252,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressWithoutToken"));
 
         given()
-                .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -259,10 +269,11 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка получения элемента справочника по IP")
     public void testGETIplocateAddress() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocates = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp"))
                 .when()
                 .get(requestPath)
@@ -279,10 +290,11 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка с указанием не валидного IP")
     public void testGETIplocateAddressInvalidIp() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressInvalidIp"))
                 .when()
                 .get(requestPath)
@@ -298,10 +310,11 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка запрос без обязательного параметра ip")
     public void testGETIplocateAddressWithoutIp() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .get(requestPath)
                 .then()
@@ -316,10 +329,11 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка запрос c параметром language.")
     public void testGETIplocateAddressLanguageEn() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
                 .header("Authorization",getToken())
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp1"))
                 .param(GET_IPLOCATE_ADDRESS_PARAM_LNG, config.getProperty("GETIplocateAddressParamEN"))
                 .when()
@@ -337,10 +351,11 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка запрос c не верным Токеном")
     public void testGETIplocateAddressInvalidToken() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         given()
                 .header("Authorization",getInvalidToken())
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp2"))
                 .when()
                 .get(requestPath)
@@ -355,9 +370,10 @@ public class AddressDataTest extends DadataEndpoints {
     @DisplayName("Проверка запрос без авторизации")
     public void testGETIplocateAddressWithoutToken() {
 
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         given()
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp3"))
                 .when()
                 .get(requestPath)
