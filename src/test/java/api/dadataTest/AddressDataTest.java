@@ -8,15 +8,13 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Execution(ExecutionMode.CONCURRENT)
+
 public class AddressDataTest extends DadataEndpoints {
 
 
@@ -28,7 +26,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue"));
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -52,7 +50,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue1"));
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -75,7 +73,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue2"));
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -98,7 +96,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue3"));
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -123,7 +121,7 @@ public class AddressDataTest extends DadataEndpoints {
         );
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -147,7 +145,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest("");
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -169,7 +167,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"));
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -191,7 +189,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"), 22);
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -211,7 +209,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body("{addressRequest}")
@@ -232,7 +230,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressInvalidToken"));
 
         given()
-                .header("Authorization",getInvalidToken())
+                .header("Authorization", getInvalidToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -272,7 +270,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocates = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp"))
                 .when()
@@ -293,7 +291,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressInvalidIp"))
                 .when()
@@ -313,7 +311,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .get(requestPath)
@@ -332,7 +330,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
-                .header("Authorization",getToken())
+                .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp1"))
                 .param(GET_IPLOCATE_ADDRESS_PARAM_LNG, config.getProperty("GETIplocateAddressParamEN"))
@@ -354,7 +352,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         given()
-                .header("Authorization",getInvalidToken())
+                .header("Authorization", getInvalidToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp2"))
                 .when()
