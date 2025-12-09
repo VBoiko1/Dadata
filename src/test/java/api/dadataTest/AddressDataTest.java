@@ -28,6 +28,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue"));
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -50,6 +51,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue1"));
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -71,6 +73,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue2"));
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -92,6 +95,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue3"));
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -115,6 +119,7 @@ public class AddressDataTest extends DadataEndpoints {
         );
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -137,6 +142,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest("");
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -157,6 +163,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"));
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -177,6 +184,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"), 22);
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -195,6 +203,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         given()
+                .header("Authorization",getToken())
                 .when()
                 .body("{addressRequest}")
                 .post(requestPath)
@@ -214,6 +223,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressInvalidToken"));
 
         given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -232,6 +242,7 @@ public class AddressDataTest extends DadataEndpoints {
         AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressWithoutToken"));
 
         given()
+                .header("Authorization",getToken())
                 .when()
                 .body(addressRequest)
                 .post(requestPath)
@@ -251,6 +262,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressIplocate addressIplocates = given()
+                .header("Authorization",getToken())
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp"))
                 .when()
                 .get(requestPath)
@@ -270,6 +282,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressIplocate addressIplocate = given()
+                .header("Authorization",getToken())
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressInvalidIp"))
                 .when()
                 .get(requestPath)
@@ -288,6 +301,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressIplocate addressIplocate = given()
+                .header("Authorization",getToken())
                 .when()
                 .get(requestPath)
                 .then()
@@ -305,6 +319,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressIplocate addressIplocate = given()
+                .header("Authorization",getToken())
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp1"))
                 .param(GET_IPLOCATE_ADDRESS_PARAM_LNG, config.getProperty("GETIplocateAddressParamEN"))
                 .when()
@@ -325,6 +340,7 @@ public class AddressDataTest extends DadataEndpoints {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         given()
+                .header("Authorization",getInvalidToken())
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp2"))
                 .when()
                 .get(requestPath)
