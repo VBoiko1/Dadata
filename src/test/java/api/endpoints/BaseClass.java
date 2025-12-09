@@ -2,12 +2,16 @@ package api.endpoints;
 
 import api.dadata.helpers.ConfigContainer;
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 
 public class BaseClass {
 
-    static {
-        RestAssured.baseURI = "https://suggestions.dadata.ru/suggestions/";
+
+    @BeforeEach
+    public  void setDadataBaseURI() {
+        RestAssured.baseURI = config.getProperty("BaseDadataURI");
     }
 
     protected static final String INVALID_TOKEN = "Token 77ff8ae67e0f2fdda18cab781e5be39b053cd777";

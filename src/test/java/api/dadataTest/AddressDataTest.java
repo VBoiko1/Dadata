@@ -21,7 +21,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов по наименованию города")
     public void testPOSTSuggestAddressValid() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest = AddressRequest.builder()
                 .query(config.getProperty("POSTAddressValidValue"))
@@ -32,7 +31,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -47,7 +46,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов по части наименованию города")
     public void testPOSTSSuggestAddressValid1() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest = AddressRequest.builder()
                 .query(config.getProperty("POSTAddressValidValue1"))
@@ -58,7 +56,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -72,7 +70,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов по наименованию города в нижнем регистре")
     public void testPOSTSuggestAddressLowerCseValue() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest = AddressRequest.builder()
                 .query(config.getProperty("POSTAddressValidValue2"))
@@ -83,7 +80,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -97,7 +94,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов по наименованию города в верхнем регистре")
     public void testPOSTSuggestAddressUpperCaseValue() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest = AddressRequest.builder()
                 .query(config.getProperty("POSTAddressValidValue3"))
@@ -108,7 +104,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -122,7 +118,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов на английском языке")
     public void testPOSTSuggestAddressENLanguageValue() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest = AddressRequest.builder()
                 .query(config.getProperty("POSTAddressValidValueEN"))
@@ -135,7 +130,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -150,7 +145,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Запрос с пустым Query")
     public void testPOSTSuggestAddressEmptyValue() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest =  AddressRequest.builder()
                 .query("")
@@ -161,7 +155,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -174,7 +168,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника по количеству выдаваемых результатов (По умолчанию 10)")
     public void testPOSTSuggestAddressCountResult() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest = AddressRequest.builder()
                 .query(config.getProperty("POSTAddressValidValue4"))
@@ -185,7 +178,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -198,7 +191,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника по заданному количеству выдаваемых результатов.(Макс. = 20)")
     public void testPOSTSuggestAddressCountValue() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest = AddressRequest.builder()
                 .query(config.getProperty("POSTAddressValidValue4"))
@@ -210,7 +202,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -223,14 +215,13 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка с некорректным телом запроса")
     public void testPOSTSuggestAddressInvalidValue() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         given()
                 .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body("{addressRequest}")
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(400)
                 .log().all();
@@ -242,7 +233,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка получение элементов справочника с не существующим токеном")
     public void testPOSTSuggestAddressInvalidTokenAuth() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest = AddressRequest.builder()
                 .query(config.getProperty("POSTAddressInvalidToken"))
@@ -253,7 +243,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(403)
                 .log().all();
@@ -264,7 +254,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка получение элементов справочника без токена")
     public void testPOSTSuggestAddressWithoutToken() {
-        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         AddressRequest addressRequest = AddressRequest.builder()
                 .query(config.getProperty("POSTAddressWithoutToken"))
@@ -274,7 +263,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(requestPath)
+                .post(POST_SUGGEST_ADDRESS)
                 .then()
                 .statusCode(401)
                 .log().all();
@@ -288,14 +277,13 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка получения элемента справочника по IP")
     public void testGETIplocateAddress() {
-        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocates = given()
                 .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp"))
                 .when()
-                .get(requestPath)
+                .get(GET_IPLOCATE_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -309,14 +297,13 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка с указанием не валидного IP")
     public void testGETIplocateAddressInvalidIp() {
-        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
                 .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressInvalidIp"))
                 .when()
-                .get(requestPath)
+                .get(GET_IPLOCATE_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -329,13 +316,12 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка запрос без обязательного параметра ip")
     public void testGETIplocateAddressWithoutIp() {
-        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
                 .header("Authorization", getToken())
                 .contentType(ContentType.JSON)
                 .when()
-                .get(requestPath)
+                .get(GET_IPLOCATE_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -348,7 +334,6 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка запрос c параметром language.")
     public void testGETIplocateAddressLanguageEn() {
-        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
                 .header("Authorization", getToken())
@@ -356,7 +341,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp1"))
                 .param(GET_IPLOCATE_ADDRESS_PARAM_LNG, config.getProperty("GETIplocateAddressParamEN"))
                 .when()
-                .get(requestPath)
+                .get(GET_IPLOCATE_ADDRESS)
                 .then()
                 .statusCode(200)
                 .log().all()
@@ -370,14 +355,13 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка запрос c не верным Токеном")
     public void testGETIplocateAddressInvalidToken() {
-        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         given()
                 .header("Authorization", getInvalidToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp2"))
                 .when()
-                .get(requestPath)
+                .get(GET_IPLOCATE_ADDRESS)
                 .then()
                 .statusCode(403)
                 .log().all()
@@ -389,13 +373,11 @@ public class AddressDataTest extends DadataEndpoints {
     @DisplayName("Проверка запрос без авторизации")
     public void testGETIplocateAddressWithoutToken() {
 
-        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
-
         given()
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp3"))
                 .when()
-                .get(requestPath)
+                .get(GET_IPLOCATE_ADDRESS)
                 .then()
                 .statusCode(401)
                 .log().all()
