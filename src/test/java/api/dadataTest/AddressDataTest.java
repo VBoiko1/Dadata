@@ -1,37 +1,40 @@
 package api.dadataTest;
 
-import api.Specification;
 import api.dadata.address.AddressIplocate;
 import api.dadata.address.AddressRequest;
 import api.dadata.address.AddressSuggestions;
 import api.endpoints.DadataEndpoints;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Execution(ExecutionMode.CONCURRENT)
+
 public class AddressDataTest extends DadataEndpoints {
 
 
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов по наименованию города")
     public void testPOSTSuggestAddressValid() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
@@ -44,16 +47,20 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов по части наименованию города")
     public void testPOSTSSuggestAddressValid1() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue1"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue1"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
-                .spec(Specification.requestSpec(URL))
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
@@ -65,16 +72,20 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов по наименованию города в нижнем регистре")
     public void testPOSTSuggestAddressLowerCseValue() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue2"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue2"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
-                .spec(Specification.requestSpec(URL))
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
@@ -86,16 +97,20 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов по наименованию города в верхнем регистре")
     public void testPOSTSuggestAddressUpperCaseValue() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue3"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue3"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
@@ -107,18 +122,22 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника адресов на английском языке")
     public void testPOSTSuggestAddressENLanguageValue() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValueEN"),
-                config.getProperty("POSTSuggestAddressLanguage")
-        );
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValueEN"))
+                .language(config.getProperty("POSTSuggestAddressLanguage"))
+                .build();
+
 
         List<AddressSuggestions> addressSuggestions = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
@@ -131,16 +150,20 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Запрос с пустым Query")
     public void testPOSTSuggestAddressEmptyValue() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest("");
+        AddressRequest addressRequest =  AddressRequest.builder()
+                .query("")
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
@@ -151,16 +174,20 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника по количеству выдаваемых результатов (По умолчанию 10)")
     public void testPOSTSuggestAddressCountResult() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue4"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
@@ -171,16 +198,21 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверяет получение элементов справочника по заданному количеству выдаваемых результатов.(Макс. = 20)")
     public void testPOSTSuggestAddressCountValue() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"), 22);
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue4"))
+                .count(22)
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
@@ -191,14 +223,16 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка с некорректным телом запроса")
     public void testPOSTSuggestAddressInvalidValue() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
         given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body("{addressRequest}")
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecError400())
+                .statusCode(400)
                 .log().all();
 
 
@@ -208,16 +242,20 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка получение элементов справочника с не существующим токеном")
     public void testPOSTSuggestAddressInvalidTokenAuth() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressInvalidToken"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressInvalidToken"))
+                .build();
 
         given()
-                .spec(Specification.requestSpecInvalidToken(URL))
+                .header("Authorization", getInvalidToken())
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecError403())
+                .statusCode(403)
                 .log().all();
 
     }
@@ -226,16 +264,19 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка получение элементов справочника без токена")
     public void testPOSTSuggestAddressWithoutToken() {
+        String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressWithoutToken"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressWithoutToken"))
+                .build();
 
         given()
-                .spec(Specification.requestSpecWithoutToken(URL))
+                .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
-                .post(POST_SUGGEST_ADDRESS)
+                .post(requestPath)
                 .then()
-                .spec(Specification.responseSpecError401())
+                .statusCode(401)
                 .log().all();
 
     }
@@ -247,14 +288,16 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка получения элемента справочника по IP")
     public void testGETIplocateAddress() {
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocates = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp"))
                 .when()
-                .get(GET_IPLOCATE_ADDRESS)
+                .get(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
 
@@ -266,14 +309,16 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка с указанием не валидного IP")
     public void testGETIplocateAddressInvalidIp() {
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressInvalidIp"))
                 .when()
-                .get(GET_IPLOCATE_ADDRESS)
+                .get(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
 
@@ -284,13 +329,15 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка запрос без обязательного параметра ip")
     public void testGETIplocateAddressWithoutIp() {
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .when()
-                .get(GET_IPLOCATE_ADDRESS)
+                .get(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
 
@@ -301,15 +348,17 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка запрос c параметром language.")
     public void testGETIplocateAddressLanguageEn() {
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         AddressIplocate addressIplocate = given()
-                .spec(Specification.requestSpec(URL))
+                .header("Authorization", getToken())
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp1"))
                 .param(GET_IPLOCATE_ADDRESS_PARAM_LNG, config.getProperty("GETIplocateAddressParamEN"))
                 .when()
-                .get(GET_IPLOCATE_ADDRESS)
+                .get(requestPath)
                 .then()
-                .spec(Specification.responseSpecOK200())
+                .statusCode(200)
                 .log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
 
@@ -321,14 +370,16 @@ public class AddressDataTest extends DadataEndpoints {
     @Test
     @DisplayName("Проверка запрос c не верным Токеном")
     public void testGETIplocateAddressInvalidToken() {
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         given()
-                .spec(Specification.requestSpecInvalidToken(URL))
+                .header("Authorization", getInvalidToken())
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp2"))
                 .when()
-                .get(GET_IPLOCATE_ADDRESS)
+                .get(requestPath)
                 .then()
-                .spec(Specification.responseSpecError403())
+                .statusCode(403)
                 .log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
     }
@@ -338,14 +389,15 @@ public class AddressDataTest extends DadataEndpoints {
     @DisplayName("Проверка запрос без авторизации")
     public void testGETIplocateAddressWithoutToken() {
 
+        String requestPath = RestAssured.baseURI + GET_IPLOCATE_ADDRESS;
 
         given()
-                .spec(Specification.requestSpecWithoutToken(URL))
+                .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp3"))
                 .when()
-                .get(GET_IPLOCATE_ADDRESS)
+                .get(requestPath)
                 .then()
-                .spec(Specification.responseSpecError401())
+                .statusCode(401)
                 .log().all()
                 .extract().response().jsonPath().getObject("location", AddressIplocate.class);
     }
