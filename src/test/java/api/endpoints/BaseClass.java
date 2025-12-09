@@ -1,11 +1,14 @@
 package api.endpoints;
 
 import api.dadata.helpers.ConfigContainer;
+import io.restassured.RestAssured;
 
 
 public class BaseClass {
 
-    protected static final String URL = "https://suggestions.dadata.ru/suggestions/";
+    static {
+        RestAssured.baseURI = "https://suggestions.dadata.ru/suggestions/";
+    }
 
     protected static final String INVALID_TOKEN = "Token 77ff8ae67e0f2fdda18cab781e5be39b053cd777";
 
