@@ -23,7 +23,9 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressValid() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization", getToken())
@@ -47,7 +49,9 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSSuggestAddressValid1() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue1"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue1"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization", getToken())
@@ -70,7 +74,9 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressLowerCseValue() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue2"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue2"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization", getToken())
@@ -93,7 +99,9 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressUpperCaseValue() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue3"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue3"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization", getToken())
@@ -116,9 +124,11 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressENLanguageValue() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValueEN"),
-                config.getProperty("POSTSuggestAddressLanguage")
-        );
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValueEN"))
+                .language(config.getProperty("POSTSuggestAddressLanguage"))
+                .build();
+
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization", getToken())
@@ -142,7 +152,9 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressEmptyValue() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest("");
+        AddressRequest addressRequest =  AddressRequest.builder()
+                .query("")
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization", getToken())
@@ -164,7 +176,9 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressCountResult() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue4"))
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization", getToken())
@@ -186,7 +200,10 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressCountValue() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressValidValue4"), 22);
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressValidValue4"))
+                .count(22)
+                .build();
 
         List<AddressSuggestions> addressSuggestions = given()
                 .header("Authorization", getToken())
@@ -227,7 +244,9 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressInvalidTokenAuth() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressInvalidToken"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressInvalidToken"))
+                .build();
 
         given()
                 .header("Authorization", getInvalidToken())
@@ -247,7 +266,9 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressWithoutToken() {
         String requestPath = RestAssured.baseURI + POST_SUGGEST_ADDRESS;
 
-        AddressRequest addressRequest = new AddressRequest(config.getProperty("POSTAddressWithoutToken"));
+        AddressRequest addressRequest = AddressRequest.builder()
+                .query(config.getProperty("POSTAddressWithoutToken"))
+                .build();
 
         given()
                 .contentType(ContentType.JSON)
