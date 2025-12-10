@@ -26,7 +26,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -51,7 +51,6 @@ public class AddressDataTest extends DadataEndpoints {
                 .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-               // .header("Authorization", getToken())
                 .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
@@ -76,7 +75,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -100,7 +99,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -126,7 +125,7 @@ public class AddressDataTest extends DadataEndpoints {
 
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -151,7 +150,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -174,7 +173,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -198,7 +197,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -217,7 +216,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testPOSTSuggestAddressInvalidValue() {
 
         given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body("{addressRequest}")
@@ -239,7 +238,7 @@ public class AddressDataTest extends DadataEndpoints {
                 .build();
 
         given()
-                .header("Authorization", getInvalidToken())
+                .auth().preemptive().oauth2(getInvalidToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)
@@ -279,7 +278,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testGETIplocateAddress() {
 
         AddressIplocate addressIplocates = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp"))
                 .when()
@@ -299,7 +298,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testGETIplocateAddressInvalidIp() {
 
         AddressIplocate addressIplocate = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressInvalidIp"))
                 .when()
@@ -318,7 +317,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testGETIplocateAddressWithoutIp() {
 
         AddressIplocate addressIplocate = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .get(GET_IPLOCATE_ADDRESS)
@@ -336,7 +335,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testGETIplocateAddressLanguageEn() {
 
         AddressIplocate addressIplocate = given()
-                .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp1"))
                 .param(GET_IPLOCATE_ADDRESS_PARAM_LNG, config.getProperty("GETIplocateAddressParamEN"))
@@ -357,7 +356,7 @@ public class AddressDataTest extends DadataEndpoints {
     public void testGETIplocateAddressInvalidToken() {
 
         given()
-                .header("Authorization", getInvalidToken())
+                .auth().preemptive().oauth2(getInvalidToken())
                 .contentType(ContentType.JSON)
                 .param(GET_IPLOCATE_ADDRESS_PARAM, config.getProperty("GETIplocateAddressValueIp2"))
                 .when()
