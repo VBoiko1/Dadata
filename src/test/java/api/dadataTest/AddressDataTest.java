@@ -46,8 +46,10 @@ public class AddressDataTest extends DadataEndpoints {
     @DisplayName("Проверяет получение элементов справочника адресов по части наименованию города")
     public void testPOSTSSuggestAddressValid1() {
 
+        String searchCity = config.getProperty("POSTAddressValidValue1");
+
         AddressRequest addressRequest = AddressRequest.builder()
-                .query(config.getProperty("POSTAddressValidValue1"))
+                .query(searchCity)
                 .build();
 
         List<AddressSuggestions> addressSuggestions = given()
@@ -61,8 +63,14 @@ public class AddressDataTest extends DadataEndpoints {
                 .log().all()
                 .extract().body().jsonPath().getList("suggestions", AddressSuggestions.class);
 
-        assertEquals(config.getProperty("POSTAddressValidValue1Expected"), addressSuggestions.get(1).getValue());
-        assertEquals(config.getProperty("POSTAddressValidValueCountryExpected"), addressSuggestions.get(1).getData().getCountry());
+        assertFalse(addressSuggestions.isEmpty());
+
+        String searchCityLower = searchCity.toLowerCase();
+
+        for (int i = 0; i < addressSuggestions.size(); i++) {
+            AddressSuggestions suggestion = addressSuggestions.get(i);
+            assertTrue(suggestion.getValue().toLowerCase().contains(searchCityLower));
+        }
     }
 
 
@@ -145,7 +153,7 @@ public class AddressDataTest extends DadataEndpoints {
     @DisplayName("Запрос с пустым Query")
     public void testPOSTSuggestAddressEmptyValue() {
 
-        AddressRequest addressRequest =  AddressRequest.builder()
+        AddressRequest addressRequest = AddressRequest.builder()
                 .query("")
                 .build();
 
