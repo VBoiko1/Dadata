@@ -4,7 +4,6 @@ import api.dadata.address.AddressIplocate;
 import api.dadata.address.AddressRequest;
 import api.dadata.address.AddressSuggestions;
 import api.endpoints.DadataEndpoints;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,7 +51,8 @@ public class AddressDataTest extends DadataEndpoints {
                 .build();
 
         List<AddressSuggestions> addressSuggestions = given()
-                .header("Authorization", getToken())
+               // .header("Authorization", getToken())
+                .auth().preemptive().oauth2(getToken())
                 .contentType(ContentType.JSON)
                 .when()
                 .body(addressRequest)

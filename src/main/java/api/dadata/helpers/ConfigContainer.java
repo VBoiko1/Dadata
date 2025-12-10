@@ -17,7 +17,7 @@ public class ConfigContainer {
     //  Приватный конструктор - нельзя создать извне
     private ConfigContainer() {
         this.properties = new Properties();
-        loadProperties();
+       // loadProperties();
     }
 
     //  Публичный статический метод для получения экземпляра
@@ -29,7 +29,7 @@ public class ConfigContainer {
     }
 
     //  Метод загрузки значений
-    private void loadProperties() {
+    public void loadProperties() {
         try (InputStream input = getClass().getClassLoader()
                 .getResourceAsStream("dadata.properties")) {
 

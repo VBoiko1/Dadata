@@ -2,25 +2,20 @@ package api.endpoints;
 
 import api.dadata.helpers.ConfigContainer;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 
 public class BaseClass {
 
 
-    @BeforeEach
-    public  void setDadataBaseURI() {
-        RestAssured.baseURI = config.getProperty("BaseDadataURI");
-    }
-
     protected static final String INVALID_TOKEN = "Token 77ff8ae67e0f2fdda18cab781e5be39b053cd777";
 
     protected ConfigContainer config;
 
     public BaseClass() {
-
-        this.config = ConfigContainer.getInstance();
+         ConfigContainer.getInstance().loadProperties();
+         this.config = ConfigContainer.getInstance();
+        RestAssured.baseURI = config.getProperty("BaseDadataURI");
 
     }
 
