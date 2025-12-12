@@ -1,5 +1,6 @@
 package api.dadata.helpers;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,7 +18,7 @@ public class ConfigContainer {
     //  Приватный конструктор - нельзя создать извне
     private ConfigContainer() {
         this.properties = new Properties();
-       // loadProperties();
+
     }
 
     //  Публичный статический метод для получения экземпляра
@@ -29,7 +30,7 @@ public class ConfigContainer {
     }
 
     //  Метод загрузки значений
-    public void loadProperties() {
+    public ConfigContainer loadProperties() {
         try (InputStream input = getClass().getClassLoader()
                 .getResourceAsStream("dadata.properties")) {
 
@@ -42,6 +43,19 @@ public class ConfigContainer {
 
         } catch (IOException e) {
             throw new RuntimeException("Ошибка при загрузке конфигурации", e);
+        }
+        return this;
+    }
+
+
+    public void loadConfig(String path) {
+        try (InputStream input = new FileInputStream(path)) {
+
+            // Загружаем с UTF-8 кодировкой
+            properties.load(new InputStreamReader(input, StandardCharsets.UTF_8));
+
+        } catch (IOException e) {
+            throw new RuntimeException("Ошибка при загрузке конфигурации из файла: " + path, e);
         }
     }
 
